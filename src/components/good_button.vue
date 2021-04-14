@@ -1,7 +1,13 @@
 <template>
   <div style="flex:1;height:100%;display: flex;align-items: center;padding: 0 16px;flex-direction: row-reverse" v-if="gid&&uid">
-    <nut-button v-if="canEdit" :disabled="disable">修改商品</nut-button>
-    <nut-button v-else @click="chat" :disabled="disable">{{sessionId?'继续沟通':'沟通一下吧'}}</nut-button>
+    <nut-button shape="circle" v-if="canEdit" :disabled="disable" @click="showAction=true">商品操作</nut-button>
+    <nut-button shape="circle" v-else @click="chat" :disabled="disable">{{sessionId?'继续沟通':'沟通一下吧'}}</nut-button>
+    <nut-popup round position="bottom" v-model="showAction" get-container="#app">
+      <div style="padding: 20px">
+        <div>编辑商品</div>
+        <div>删除商品</div>
+      </div>
+    </nut-popup>
   </div>
 </template>
 
@@ -15,6 +21,7 @@ export default {
       sessionId:null,
       gid:null,
       uid:null,
+      showAction:true,
       disable:true,
     }
   },

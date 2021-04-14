@@ -139,7 +139,6 @@ export default {
         this.goods = e.content.goods
         this.member = e.content.member
         this.isSold = e.content.goods.state === 1
-        console.log(e.content)
         this.loading = false
       })
     },
@@ -152,9 +151,9 @@ export default {
     },
   },
   mounted () {
-    setTimeout(() => {
-      this.$root.bs.scrollTo(0, 0, 100)
-    }, 200)
+    // setTimeout(() => {
+    //   this.$root.bs.scrollTo(0, 0, 100)
+    // }, 200)
   }
 }
 </script>
