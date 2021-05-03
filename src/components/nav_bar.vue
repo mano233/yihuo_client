@@ -3,7 +3,7 @@
     <div @click="$router.push({name:'home'})" class="item"><i class="iconfont icon-shouye1"></i>首页</div>
     <div @click="$router.push({name:'publish'})" class="item"><i class="iconfont icon-bianji"></i>发布</div>
     <div @click="$router.push({name:'chat'})" class="item"><i class="iconfont icon-wodekefu"></i>消息</div>
-    <div @click="$router.push({name:'profile'})" class="item"><i class="iconfont icon-zhengquanzhanghu"></i>我的</div>
+    <div @click="goProfile" class="item"><i class="iconfont icon-zhengquanzhanghu"></i>我的</div>
   </div>
 </template>
 
@@ -11,6 +11,9 @@
 export default {
   name: "nav_bar",
   methods:{
+    goProfile(){
+      this.$router.push('/profile/'+localStorage.getItem('uid'))
+    }
   }
 }
 </script>

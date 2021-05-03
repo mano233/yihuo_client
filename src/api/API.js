@@ -57,8 +57,8 @@ function getGoodsPre(gid){
 function register(userData){
     return post('/user/reg',userData)
 }
-function getGoodsByState(state){
-    return post('/goods/state/'+state)
+function getGoodsByState(uid,state){
+    return post('/goods/state/'+uid+'/'+state)
 }
 function getUserInfo(uid){
     return get('/user/'+uid)
@@ -67,7 +67,16 @@ function logOut(){
     localStorage.clear()
     main.$root.$ws.close()
 }
+function getSessionInfo(sessionID){
+    return get('/chat/session/'+sessionID)
+}
+function deleteGood(gid){
+    return post('/goods/delete/'+gid)
+}
 
+function dealGood(gid){
+    return post('/goods/deal/'+gid);
+}
 export {
     publishGoods,
     getGoods,
@@ -85,5 +94,8 @@ export {
     getGoodsPre,
     getGoodsByState,
     register,
-    getUserInfo
+    getUserInfo,
+    getSessionInfo,
+    deleteGood,
+    dealGood
 }

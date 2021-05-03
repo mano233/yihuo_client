@@ -1,9 +1,9 @@
 <template>
-  <div style="display: flex;align-items: center" @click="clickHandler(lastMsg.gid,sessionId)">
+  <div style="display: flex;align-items: center;" @click="clickHandler(lastMsg.gid,sessionId);">
     <nut-avatar size="large" shape="square"></nut-avatar>
     <div style="flex: 1;display:flex;flex-direction: column;justify-content: space-between;">
-      <div>{{title}}</div>
-      <div style="font-size: 12px">{{ lastMsg.lastMsg }}</div>
+      <div style="font-size: 16px;font-weight: bold">{{title?title:'商品已删除'}}</div>
+      <div style="font-size: 14px;color: #9b9b9b">{{ lastMsg.lastMsg }}</div>
     </div>
     <div style="width: 48px;height: 48px;">
       <img v-if="preImg" :src="preImg" style="object-fit: cover;background: black;width: inherit;height: inherit;border-radius: 7px" alt="img">

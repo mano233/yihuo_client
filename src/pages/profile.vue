@@ -78,17 +78,17 @@ export default {
     }
   },
   created () {
-    getGoodsByState(0).then(({content})=>{
+    getGoodsByState(this.$route.params.uid,0).then(({content})=>{
       this.list1 = content
     })
-    getGoodsByState(1).then(({content})=>{
+    getGoodsByState(this.$route.params.uid,1).then(({content})=>{
       this.list2 = content
     })
     this.getUserInfo()
   },
   methods:{
     getUserInfo(){
-      getUserInfo(localStorage.getItem('uid')).then(e=>{
+      getUserInfo(this.$route.params.uid).then(e=>{
         console.log(e)
         this.userInfo = e.content
       })

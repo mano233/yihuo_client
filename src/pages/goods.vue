@@ -24,7 +24,7 @@
         <div style="height: 400px;background: rgb(239, 239, 239);border-radius: 7px"></div>
       </div>
     </nut-skeleton>
-    <div style="background: white;border-bottom: 1px #eee solid;display: flex;align-items: center;padding: 16px">
+    <div style="background: white;border-bottom: 1px #eee solid;display: flex;align-items: center;padding: 16px" @click="goProfile">
       <nut-avatar size="large" shape="square"></nut-avatar>
       <div>
         <div>
@@ -60,10 +60,9 @@
         </p>
         <img alt="img" v-for="(val,index) in content.imgs" :key="index" :src="val" style="object-fit: cover;width: 100%"
              @load="onImgLoad"/>
-        <div style="display: flex;font-size: 12px;align-items: center">
-          <span>浏览人数：89898</span>
-          <span
-              style="display: inline-block;border: 1px solid #9b9b9b;padding: 2px 6px;border-radius: 8px;color: #9b9b9b;">举报</span>
+        <div style="display: flex;font-size: 12px;align-items: center;color: #9b9b9b;margin-top: 24px">
+          <span style="margin-right: 8px">发布时间：{{this.goods.ctime|fromNow}}</span>
+          <span>浏览人数：88</span>
         </div>
       </div>
     </div>
@@ -131,6 +130,9 @@ export default {
     main.$off('goodsLoadFin')
   },
   methods: {
+    goProfile(){
+      this.$router.push('/profile/'+this.goods.uid)
+    },
     getDetail(gid){
       getGoodsDetail(gid).then((e) => {
         main.$emit('goodsLoadFin', e.content)

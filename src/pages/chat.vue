@@ -5,7 +5,7 @@
     </div>
     <ul v-else style="padding: 16px;background: white">
       <li v-for="item in sessions" :key="item.id">
-        <chat_list_item :lastMsg="item.value.lastMsg" :sessionId="item.id" style="margin-bottom: 12px"/>
+        <chat_list_item :lastMsg="item.value.lastMsg" :sessionId="item.id" style="margin-bottom: 12px;padding-top:12px;border-top: 1px solid #eee"/>
       </li>
     </ul>
   </div>

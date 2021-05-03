@@ -6,7 +6,6 @@
     <div style="position: fixed;width:100%;z-index: 99;">
       <nut-navbar :close-show="false" :search-show="false" :more-show="false" @on-click-back="$router.go(-1)">
         <slot name="title">异或app</slot>
-
       </nut-navbar>
     </div>
 

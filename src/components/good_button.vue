@@ -5,14 +5,14 @@
     <nut-popup round position="bottom" v-model="showAction" get-container="#app">
       <div style="padding: 20px">
         <div>编辑商品</div>
-        <div>删除商品</div>
+        <div @click="deleteGood">删除商品</div>
       </div>
     </nut-popup>
   </div>
 </template>
 
 <script>
-import {createSession, getSessionId} from "../api/API";
+import {createSession, getSessionId,deleteGood} from "../api/API";
 import main from "../main";
 export default {
   name: "good_button",
@@ -21,7 +21,7 @@ export default {
       sessionId:null,
       gid:null,
       uid:null,
-      showAction:true,
+      showAction:false,
       disable:true,
     }
   },
@@ -46,6 +46,15 @@ export default {
     })
   },
   methods:{
+    deleteGood(){
+      deleteGood(this.$route.params.id).then(e=>{
+        if(e.code===6001){
+          this.$toast.fail(e.msg)
+        }
+        this.showAction=false
+        this.$router.go(-1);
+      })
+    },
     chat(){
       if(this.sessionId){
         this.$router.push({ name: 'chatroom', params: { gid: this.$route.params.id,sid:this.sessionId}})
