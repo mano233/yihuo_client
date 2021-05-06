@@ -3,36 +3,31 @@
     <div>
 
       <div style="padding: 8px 16px;background: white">
-        <nut-searchbar placeText="搜搜看吧～" :hasSearchButton="true" :animation="false" @focus="focusFun"></nut-searchbar>
+        <nut-searchbar placeText="搜搜看吧～" :hasSearchButton="true" :animation="false" v-model="searchText" @submit="submitFun"></nut-searchbar>
       </div>
 
-      <nut-noticebar style="margin-bottom: 14px"
-                     left-icon="https://img13.360buyimg.com/imagetools/jfs/t1/72082/2/3006/1197/5d130c8dE1c71bcd6/e48a3b60804c9775.png"
-      >华为畅享9新品即将上市，活动期间0元预约可参与抽奖，赢HUAWEI WATCH等好礼，更多产品信息请持续关注！
-      </nut-noticebar>
-      <!--<p style="margin-left: 16px;margin-bottom: 4px;margin-top:4px;font-size: 14px;color: #666666">热门商品</p>-->
-
-      <!--<div class="wrapper">-->
-      <!--  <div class="slide-box">-->
-      <!--    <div slot="list" v-for="item of hotList" :key="item.id"-->
-      <!--         @click.once="goDetail(item.id)"-->
-      <!--         style="width: 200px;height: 64px;background: white;margin:0 16px;border-radius: 14px;overflow:hidden;display: flex;padding: 8px">-->
-      <!--      <img :src="item.preImg"-->
-      <!--           style="height: 100%;width:64px;object-fit: cover;border-radius: 14px;overflow: hidden">-->
-      <!--      <div style="flex: 1;margin-left: 10px;display: flex;flex-direction: column;justify-content: space-between">-->
-      <!--        <div style="-webkit-box-orient: vertical;-->
-      <!--display: -webkit-box;-webkit-line-clamp: 2;font-size: 14px;overflow: hidden">{{ item.title }}-->
-      <!--        </div>-->
-      <!--        <nut-price-->
-      <!--            style="color: #e1251b"-->
-      <!--            :price="item.price"-->
-      <!--            :needSymbol="true"-->
-      <!--            :thousands="false"-->
-      <!--        />-->
-      <!--      </div>-->
-      <!--    </div>-->
-      <!--  </div>-->
-      <!--</div>-->
+      <p style="margin-left: 16px;margin-bottom: 4px;margin-top:4px;font-size: 14px;color: #666666">热门商品</p>
+      <div class="wrapper">
+        <div class="slide-box">
+          <div slot="list" v-for="item of hotList" :key="item.id"
+               @click.once="goDetail(item.id)"
+               style="width: 200px;height: 64px;background: white;margin:0 16px;border-radius: 14px;overflow:hidden;display: flex;padding: 8px">
+            <img :src="item.preImg"
+                 style="height: 100%;width:64px;object-fit: cover;border-radius: 14px;overflow: hidden">
+            <div style="flex: 1;margin-left: 10px;display: flex;flex-direction: column;justify-content: space-between">
+              <div style="-webkit-box-orient: vertical;
+      display: -webkit-box;-webkit-line-clamp: 2;font-size: 14px;overflow: hidden">{{ item.title }}
+              </div>
+              <nut-price
+                  style="color: #e1251b"
+                  :price="item.price"
+                  :needSymbol="true"
+                  :thousands="false"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!--<div style="padding: 0 15px">-->
       <!-- -->
@@ -60,7 +55,7 @@ import {getGoods, getHot} from '../api/API'
 import BScroll from '@better-scroll/core'
 
 let horBs;
-const pageSize = 15;
+const pageSize = 10;
 export default {
   name: "home",
   components: {
@@ -70,6 +65,7 @@ export default {
     return {
       list: [],
       pageNum: 1,
+      searchText:'',
       isLastPage: false,
       hotList: [],
       selCateLogIndex: 0
@@ -107,7 +103,6 @@ export default {
     tabSwitch (index) {
       this.selCateLogIndex = index
       let typeId = this.tabs[index].id
-      console.log(typeId)
       if (typeId) {
         getGoods(typeId, pageSize, 1).then(e => {
           this.list = e.content.list
@@ -128,7 +123,7 @@ export default {
           this.isLastPage = e.content.isLastPage
           this.$root.bs.finishPullUp()
           this.$nextTick(() => {
-            this.$root.bs.refresh();
+            this.$root.bs.refresh()
           })
         })
       }
@@ -155,8 +150,8 @@ export default {
       }
 
     },
-    focusFun () {
-      this.$router.push('/search')
+    submitFun () {
+      this.$router.push('/search/'+this.searchText)
     }
 
   }
@@ -164,6 +159,10 @@ export default {
 </script>
 
 <style scoped>
+h5{
+  margin: 0 0 12px;
+  padding: 0 16px;
+}
 .home >>> .nut-tab {
   padding: 0;
 }

@@ -69,28 +69,26 @@
 
     <div
         style="margin-top:15px;background: white;padding-right: 15px;padding-left: 15px;display: flex;flex-direction: column">
-      <p>全部留言 - 32</p>
-      <div style="display: flex;align-items: center">
-        <nut-avatar size-num="28"
-                    bg-image="https://img14.360buyimg.com/imagetools/jfs/t1/130112/36/5492/38449/5f1f964cEfd6f41bf/bec836b48b55bb00.jpg"></nut-avatar>
-        <input style="border: none;   background: #eee;flex: 1;
+      <p>全部留言 - {{comments.length}}</p>
+      <div style="display: flex;align-items: center;margin-bottom: 12px">
+        <nut-avatar size-num="28"></nut-avatar>
+        <input style="border: none;background: #eee;flex: 1;outline: none;
     border-radius: 24px;
-    padding: 8px;" placeholder="看中了，就留言吧～"/>
-        <span>发送</span>
+    padding: 8px;" placeholder="看中了，就留言吧～" v-model="commentInput"/>
+        <span @click="commentHandler">发送</span>
       </div>
       <ul>
-        <li v-for="i in 10" :key="i">
+        <li v-for="item in comments" :key="item.id">
           <div style="display: flex;">
-            <nut-avatar size-num="28"
-                        bg-image="https://img14.360buyimg.com/imagetools/jfs/t1/130112/36/5492/38449/5f1f964cEfd6f41bf/bec836b48b55bb00.jpg"></nut-avatar>
-            <div style="font-weight: bold">ssdasd14</div>
+            <nut-avatar size-num="28"></nut-avatar>
+            <div style="font-weight: bold">{{ item.userInfo.name }}</div>
             <span style="flex: 1"></span>
             <div style="font-size: 12px;color: #9b9b9b;">
-              1小时前
+              {{item.comment.rTime|fromNow}}
             </div>
           </div>
           <div style="padding-left: 36px;margin-bottom: 8px;font-size: 14px">
-            好可爱
+            {{item.comment.content}}
           </div>
 
         </li>
@@ -101,7 +99,7 @@
 </template>
 
 <script>
-import {getGoodsDetail} from "../api/API";
+import {getGoodsDetail,getComment,comment} from "../api/API";
 import main from "../main"
 
 export default {
@@ -112,8 +110,10 @@ export default {
       title: '',
       member: {},
       goods: {},
+      commentInput:'',
       content: {},
       isSold:true,
+      comments:[]
     }
   },
   computed:{
@@ -125,11 +125,24 @@ export default {
   created () {
     this.$store.commit('setGoodsId', this.$route.params.id)
     this.getDetail(this.$route.params.id)
+    this.getComment()
   },
   beforeDestroy () {
     main.$off('goodsLoadFin')
   },
   methods: {
+    getComment(){
+      console.log('get com')
+      getComment(this.$route.params.id).then((data)=>{
+        this.comments = data.content
+      })
+    },
+    commentHandler(){
+      comment(this.$route.params.id,this.commentInput).then(()=>{
+        this.commentInput = ''
+        this.getComment()
+      })
+    },
     goProfile(){
       this.$router.push('/profile/'+this.goods.uid)
     },

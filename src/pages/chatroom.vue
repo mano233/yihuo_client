@@ -18,9 +18,8 @@
 
 <script>
 import main from "../main"
-import chat_good_card from "../components/chat_good_card";
+// import chat_good_card from "../components/chat_good_card";
 import {getSessionInfo,getUserInfo } from '../api/API'
-import Vue
 export default {
   name: "chatroom",
   data(){
@@ -71,13 +70,13 @@ export default {
     })
   },
   mounted () {
-    var instance = new Vue({
-      el:document.createElement("div"),
-      render:h=>h(chat_good_card)
+    // var instance = new Vue({
+    //   el:document.createElement("div"),
+    //   render:h=>h(chat_good_card)
+    //
+    // });
 
-    });
-
-    document.body.appendChild(instance.$el);
+    // document.body.appendChild(instance.$el);
   },
   beforeDestroy () {
     main.$off('chat_user_inited')

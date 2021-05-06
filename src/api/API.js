@@ -77,6 +77,16 @@ function deleteGood(gid){
 function dealGood(gid){
     return post('/goods/deal/'+gid);
 }
+
+function getComment(gid){
+    return get('/goods/comment/'+gid)
+}
+function comment(gid,content){
+    let data = new FormData()
+    data.append('content',content)
+    data.append('gid',gid)
+    return post('/goods/comment/',data)
+}
 export {
     publishGoods,
     getGoods,
@@ -97,5 +107,7 @@ export {
     getUserInfo,
     getSessionInfo,
     deleteGood,
-    dealGood
+    dealGood,
+    getComment,
+    comment
 }

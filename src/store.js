@@ -58,7 +58,6 @@ export default new Vuex.Store({
         },
         newMsg (state, data) {
             state.temp++
-            console.log(data)
             if(!state.sessions.get(data.sid)){
                 this.commit('addNewSession',{k:data.sid,v:{lastMsg:{...data,lastMsg: data.msg},msgs:[data]}})
                 return

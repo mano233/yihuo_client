@@ -1,8 +1,5 @@
 <template>
   <div id="app" style="height: 100vh;background-color: #eee">
-    <div style="position: fixed;top:10px;z-index: 999"
-         v-if="$store.state.socketState==='error'||$store.state.socketState==='close'">聊天系统连接失败
-    </div>
     <div style="position: fixed;width:100%;z-index: 99;">
       <nut-navbar :close-show="false" :search-show="false" :more-show="false" @on-click-back="$router.go(-1)">
         <slot name="title">异或app</slot>
@@ -63,25 +60,36 @@ export default {
     });
   },
   beforeCreate () {
+    console.log('before')
+    this.$root.$ws = new WebSocket('ws://localhost:8080/chat/' + localStorage.getItem('token'))
+    setTimeout(()=>{
+      if(this.$root.$ws.readyState!==1){
+        this.$root.$ws.close()
+        this.$notify.warn('链接聊天服务超时，请刷新页面重试')
+      }
+    },500)
+    this.$root.$ws.onopen = () => {
+      this.$notify.success('聊天服务链接成功')
+      this.$store.commit('changeSocketState', 'open')
+    }
+    this.$root.$ws.onmessage = (e) => {
+      this.$notify.success('您有新的聊天消息')
+      this.$store.commit('newMsg', JSON.parse(e.data))
+    }
+    this.$root.$ws.onclose = () => {
+      this.$store.commit('changeSocketState', 'close')
+    }
+    this.$root.$ws.onerror = () => {
+      this.$notify.danger('聊天服务链接异常');
+      this.$store.commit('changeSocketState', 'error')
+    }
+
     this.$nextTick(() => {
       getCateLog().then(e=>{
         this.$store.commit('setCateLogs',e.content)
       })
       getSessionList().then((e) => {
         this.$store.commit('refreshAllSession', e.content)
-        this.$root.$ws = new WebSocket('ws://localhost:8080/chat/' + localStorage.getItem('token'))
-        this.$root.$ws.onopen = () => {
-          this.$store.commit('changeSocketState', 'open')
-        }
-        this.$root.$ws.onmessage = (e) => {
-          this.$store.commit('newMsg', JSON.parse(e.data))
-        }
-        this.$root.$ws.onclose = () => {
-          this.$store.commit('changeSocketState', 'close')
-        }
-        this.$root.$ws.onerror = () => {
-          this.$store.commit('changeSocketState', 'error')
-        }
       })
     })
   },

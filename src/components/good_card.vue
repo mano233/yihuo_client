@@ -1,13 +1,13 @@
 <template>
   <div style="border-radius: 8px;overflow:hidden;display: flex;flex-direction: column;width: 100%;position: relative" @click="redirect">
-    <div style="position: absolute;left: 0;top: 0;height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;
+    <div style="position: absolute;left: 0;top: 0;height: 100%;width: 100%;display: flex;align-items: center;justify-content: center;z-index: 9;
     background: rgba(0,0,0,0.3);" v-if="goods.state === 1">
       <div style="color: white;transform: rotate(-30deg)">
         已出售
       </div>
     </div>
     <img alt="src" :src="goods.preImg"
-         style="width: 100%;object-fit: contain;min-height: 120px;max-height: 260px;background: black"
+         style="width: 100%;object-fit: cover;min-height: 120px;max-height: 260px;background: black"
          @load="onImgLoad">
     <div style="padding:8px 12px;">
       <p style="text-overflow:ellipsis;white-space: normal;overflow: hidden;-webkit-box-orient: vertical;
@@ -22,7 +22,7 @@
         />
       </p>
       <div style="font-size: 12px;display: flex;align-items: center;margin-top: 8px">
-        <nut-avatar bg-icon style="width: 20px;height: 20px" :bg-image="member.avatarImg"></nut-avatar>
+        <nut-avatar style="width: 20px;height: 20px"></nut-avatar>
         <span style="overflow: hidden;text-overflow: ellipsis;width: 60%;color: #666666">{{ member.name }}</span>
       </div>
 
@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     redirect () {
-      console.log('/goods/' + this.goods.id)
       this.$router.push('/goods/' + this.goods.id)
     }
   }

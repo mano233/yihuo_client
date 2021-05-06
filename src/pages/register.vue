@@ -1,8 +1,8 @@
 <template>
   <div style="margin-top: auto;margin-bottom: auto;padding: 0 16px;">
     <form>
-      <div style="display: flex;align-items: center;margin-bottom: 8px">
-        <span style="margin-right: 16px" class="required">用户名</span>
+      <div style="display: flex;align-items: center;margin-bottom: 8px;">
+        <span class="required from-text">用户名</span>
         <nut-textinput
             style="flex: 1;"
             v-model="name"
@@ -11,8 +11,8 @@
             :disabled="false"
         />
       </div>
-      <div style="display: flex;align-items: center;margin-bottom: 8px">
-        <span style="margin-right: 16px" class="required">密码</span>
+      <div style="display: flex;align-items: center;margin-bottom: 8px;">
+        <span class="required from-text">密码</span>
         <nut-textinput
             placeholder="请输入密码"
             style="flex: 1"
@@ -21,7 +21,7 @@
         />
       </div>
       <div style="display: flex;align-items: center;margin-bottom: 8px">
-        <span style="margin-right: 16px" class="required">再次确认密码</span>
+        <span class="required from-text">再次确认密码</span>
         <nut-textinput
             placeholder="请再次输入密码"
             style="flex: 1"
@@ -30,7 +30,7 @@
         />
       </div>
       <div style="display: flex;align-items: center;margin-bottom: 8px">
-        <span style="margin-right: 16px" class="required">手机号码</span>
+        <span class="required from-text">手机号码</span>
         <nut-textinput
             placeholder="请输入手机号码"
             style="flex: 1"
@@ -124,6 +124,9 @@ export default {
 </script>
 
 <style scoped>
+.from-text{
+  margin-right: 16px;width: 120px;
+}
 .required::before {
   content: "*";
   color: red;

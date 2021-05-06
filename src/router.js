@@ -15,9 +15,8 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ './pages/home.vue') // 官方默认的除了Home其他视图组件都这样导入，所以后续我们也是采取这样的方式。
     },
     {
-        path: '/search',
+        path: '/search/:val',
         name: 'search',
-        meta:{keepAlive: true},
         component: () => import('./pages/search')
     },
     {
