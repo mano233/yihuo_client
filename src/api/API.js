@@ -1,4 +1,4 @@
-import {get, post} from './index'
+import {get, post, put} from './index'
 import main from "../main";
 
 function publishGoods (data) {
@@ -87,6 +87,10 @@ function comment(gid,content){
     data.append('gid',gid)
     return post('/goods/comment/',data)
 }
+
+function updateGoods(data){
+    return put('/goods/update',data)
+}
 export {
     publishGoods,
     getGoods,
@@ -109,5 +113,6 @@ export {
     deleteGood,
     dealGood,
     getComment,
+    updateGoods,
     comment
 }

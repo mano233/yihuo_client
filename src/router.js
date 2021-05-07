@@ -56,6 +56,10 @@ const routes = [
     {
         path:'/register',
         component:()=>import('./pages/register')
+    },
+    {
+        path: '/editor/:gid',
+        component:()=>import('./pages/editor')
     }
 
 ];

@@ -144,3 +144,20 @@ export function post (url, params) {
         })
     })
 }
+
+
+export function put (url, params) {
+    let toast = main.$toast.loading('加载中...', {coverColor: "rgba(0,0,0,0.5)",})
+    return new Promise((resolve, reject) => {
+        axios.put(url, params).then(res => {
+            setTimeout(() => {
+                toast.hide()
+                resolve(res.data)
+            }, 200)
+        }).catch(err => {
+            toast.hide()
+            reject(err.data)
+        })
+    })
+}
+
